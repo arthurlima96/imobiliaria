@@ -2,66 +2,78 @@ package br.com.lab.imobiliaria.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Clientes {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	
+	@Column(nullable = false, length = 100	)
+	private String nome;
 	
-	public Clientes(Long id_cliente, String nome_cliente, String cPF, String telefone1, String telefone2, String email,
-			LocalDate data_nascimento) {
-		this.id_cliente = id_cliente;
-		this.nome_cliente = nome_cliente;
-		CPF = cPF;
-		this.telefone1 = telefone1;
-		this.telefone2 = telefone2;
-		this.email = email;
-		this.data_nascimento = data_nascimento;
-	}
-	
-	
-
-	public Clientes(String nome_cliente, String cPF, String telefone1, String telefone2, String email,
-			LocalDate data_nascimento) {
-		this.nome_cliente = nome_cliente;
-		CPF = cPF;
-		this.telefone1 = telefone1;
-		this.telefone2 = telefone2;
-		this.email = email;
-		this.data_nascimento = data_nascimento;
-	}
-	
-	
-	public Clientes(Long id_cliente) {
-		this.id_cliente = id_cliente;
-	}
-
-	private Long id_cliente;
-	
-	private String nome_cliente;
-	
+	@Column(nullable = false, unique = true, length = 11)
 	private String CPF;
 	
 	private String telefone1;
 	
 	private String telefone2;
 	
+	@Column(nullable = false, unique = true, length = 255)
 	private String email;
 	
+	@Column(nullable = false)
 	private LocalDate data_nascimento;
+	
+	
+	public Clientes(Long id, String nome, String cPF, String telefone1, String telefone2, String email,
+			LocalDate data_nascimento) {
+		this.id = id;
+		this.nome = nome;
+		CPF = cPF;
+		this.telefone1 = telefone1;
+		this.telefone2 = telefone2;
+		this.email = email;
+		this.data_nascimento = data_nascimento;
+	}
+	
+	
 
-	public Long getId_cliente() {
-		return id_cliente;
+	public Clientes(String nome, String cPF, String telefone1, String telefone2, String email,
+			LocalDate data_nascimento) {
+		this.nome = nome;
+		CPF = cPF;
+		this.telefone1 = telefone1;
+		this.telefone2 = telefone2;
+		this.email = email;
+		this.data_nascimento = data_nascimento;
+	}
+	
+	
+	public Clientes(Long id) {
+		this.id = id;
+	}
+	
+	public Long getid() {
+		return id;
 	}
 
-	public void setId_cliente(Long id_cliente) {
-		this.id_cliente = id_cliente;
+	public void setid(Long id) {
+		this.id = id;
 	}
 
-	public String getNome_cliente() {
-		return nome_cliente;
+	public String getnome() {
+		return nome;
 	}
 
-	public void setNome_cliente(String nome_cliente) {
-		this.nome_cliente = nome_cliente;
+	public void setnome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getCPF() {

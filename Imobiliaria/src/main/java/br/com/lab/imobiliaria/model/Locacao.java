@@ -2,12 +2,47 @@ package br.com.lab.imobiliaria.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Locacao {
-		
-	public Locacao(Long id_locacao, Imoveis id_imovel, Clientes id_cliente, Double valor_aluguel,
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name="id_imovel")
+	private Imoveis id_imovel;
+	
+	@ManyToOne
+	@JoinColumn(name="id_cliente")
+	private Clientes id_cliente;
+	
+	private Double valor_aluguel;
+	
+	private Double percetual_multa;
+	
+	private Integer dia_vencimento;
+	
+	private LocalDate data_inicio;
+	
+	private LocalDate data_fim;
+	
+	private Boolean ativo;
+	
+	private String obs;
+
+	
+	public Locacao(Long id, Imoveis id_imovel, Clientes id_cliente, Double valor_aluguel,
 			Double percetual_multa, Integer dia_vencimento, LocalDate data_inicio, LocalDate data_fim, Boolean ativo,
 			String obs) {
-		this.id_locacao = id_locacao;
+		this.id = id;
 		this.id_imovel = id_imovel;
 		this.id_cliente = id_cliente;
 		this.valor_aluguel = valor_aluguel;
@@ -34,36 +69,17 @@ public class Locacao {
 		this.obs = obs;
 	}
 
-	public Locacao(Long id_locacao) {
-		this.id_locacao = id_locacao;		
+	public Locacao(Long id) {
+		this.id = id;		
 	}
 
-	private Long id_locacao;
 	
-	private Imoveis id_imovel;
-	
-	private Clientes id_cliente;
-	
-	private Double valor_aluguel;
-	
-	private Double percetual_multa;
-	
-	private Integer dia_vencimento;
-	
-	private LocalDate data_inicio;
-	
-	private LocalDate data_fim;
-	
-	private Boolean ativo;
-	
-	private String obs;
-
-	public Long getId_locacao() {
-		return id_locacao;
+	public Long getid() {
+		return id;
 	}
 
-	public void setId_locacao(Long id_locacao) {
-		this.id_locacao = id_locacao;
+	public void setid(Long id) {
+		this.id = id;
 	}
 
 	public Imoveis getId_imovel() {
@@ -144,9 +160,9 @@ public class Locacao {
 	
 	@Override
 	public String toString() {
-		return 		  "ID Locação: ["+getId_locacao()+"] "
-					+ "ID Imovel: ["+getId_imovel().getId_imovel()+"] "
-					+ "ID Inquilino: ["+getId_cliente().getId_cliente()+"] "
+		return 		  "ID Locação: ["+getid()+"] "
+					+ "ID Imovel: ["+getId_imovel().getid()+"] "
+					+ "ID Inquilino: ["+getId_cliente().getid()+"] "
 					+ "Valor Aluguel: ["+getValor_aluguel()+"] "
 					+ "Multa: ["+getPercetual_multa()+"] "
 					+ "Dia Vencimento: ["+getDia_vencimento()+"] "

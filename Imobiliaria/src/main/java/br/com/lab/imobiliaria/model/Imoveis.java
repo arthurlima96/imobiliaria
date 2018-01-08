@@ -1,13 +1,47 @@
 package br.com.lab.imobiliaria.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Imoveis {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	
+	@Column(nullable = false)
+	private String tipo_imovel;
 	
-	public Imoveis(Long id_imovel, String tipo_imovel, String endereco, String bairro, String cep, Double metragem,
+	private String endereco;
+	
+	private String bairro;
+	
+	@Column(length = 8)
+	private String cep;
+	
+	private Double metragem;
+	
+	private Integer dormitorios;
+	
+	private Integer banheiros;
+	
+	private Integer suits;
+	
+	private Integer vagasGaragem;
+	
+	private Double valorAluguel;
+	
+	private String obs;
+
+	
+	public Imoveis(Long id, String tipo_imovel, String endereco, String bairro, String cep, Double metragem,
 			Integer dormitorios, Integer banheiros, Integer suits, Integer vagasGaragem, Double valorAluguel,
 			String obs) {
-		this.id_imovel = id_imovel;
+		this.id = id;
 		this.tipo_imovel = tipo_imovel;
 		this.endereco = endereco;
 		this.bairro = bairro;
@@ -40,42 +74,17 @@ public class Imoveis {
 
 
 
-	public Imoveis(Long id_imovel) {
-		this.id_imovel = id_imovel;
+	public Imoveis(Long id) {
+		this.id = id;
 	}
 
 
-
-	private Long id_imovel;
-	
-	private String tipo_imovel;
-	
-	private String endereco;
-	
-	private String bairro;
-	
-	private String cep;
-	
-	private Double metragem;
-	
-	private Integer dormitorios;
-	
-	private Integer banheiros;
-	
-	private Integer suits;
-	
-	private Integer vagasGaragem;
-	
-	private Double valorAluguel;
-	
-	private String obs;
-
-	public Long getId_imovel() {
-		return id_imovel;
+	public Long getid() {
+		return id;
 	}
 
-	public void setId_imovel(Long id_imovel) {
-		this.id_imovel = id_imovel;
+	public void setid(Long id) {
+		this.id = id;
 	}
 
 	public String getTipo_imovel() {
@@ -168,7 +177,7 @@ public class Imoveis {
 	
 	@Override
 	public String toString() {
-		return 		  "ID: ["+getId_imovel()+"] "
+		return 		  "ID: ["+getid()+"] "
 					+ "Tipo: ["+getTipo_imovel()+"] "
 					+ "Endereço: ["+getEndereco()+"] "
 					+ "Bairro: ["+getBairro()+"] "
