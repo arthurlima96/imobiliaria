@@ -31,6 +31,7 @@ public class Clientes {
 	@Column(nullable = false)
 	private LocalDate data_nascimento;
 	
+	public Clientes() {	}
 	
 	public Clientes(Long id, String nome, String cPF, String telefone1, String telefone2, String email,
 			LocalDate data_nascimento) {

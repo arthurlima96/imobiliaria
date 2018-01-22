@@ -5,23 +5,24 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import br.com.lab.imobiliaria.model.Alugueis;
 import br.com.lab.imobiliaria.model.Clientes;
 
-public class ClientesDAO implements DAO {
+public class AlugueisDAO implements DAO{
 	
 	private EntityManager em;
 	
-	public ClientesDAO(EntityManager em) {
-	 this.em = em;
+	public AlugueisDAO(EntityManager em) {
+		this.em = em;
 	}
-	
+
 	@Override
 	public void Salvar(Object object) {
-		Clientes cliente = (Clientes) object;
+		Alugueis aluguel = (Alugueis) object;
 		
 		try {
 			em.getTransaction().begin();
-			em.persist(cliente);
+			em.persist(aluguel);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -34,10 +35,11 @@ public class ClientesDAO implements DAO {
 
 	@Override
 	public void Update(Object object) {
-		Clientes cliente = (Clientes) object;		
+		Alugueis aluguel = (Alugueis) object;
+		
 		try {
 			em.getTransaction().begin();
-			em.merge(cliente);
+			em.merge(aluguel);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -45,15 +47,16 @@ public class ClientesDAO implements DAO {
 			if (em!=null) {
 				em.close();
 			}
-		}
+		}		
 	}
 
 	@Override
 	public void Delete(Object object) {
-		Clientes cliente = (Clientes) object;		
+		Alugueis aluguel = (Alugueis) object;
+		
 		try {
 			em.getTransaction().begin();
-			em.remove(cliente);
+			em.remove(aluguel);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,35 +64,40 @@ public class ClientesDAO implements DAO {
 			if (em!=null) {
 				em.close();
 			}
-		}
+		}		
 	}
 
 	@Override
-	public List<Clientes> getDados() {
-		
-		List<Clientes> clientes = new ArrayList<>();
+	public List<?> getDados() {
+		List<Alugueis> alugueis = new ArrayList<>();
 		
 		try {
-			clientes  = em.createQuery("FROM Clientes", Clientes.class).getResultList();
+			alugueis  = em.createQuery("FROM Alugueis ", Alugueis.class).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			if(em != null)
 				em.close();	
 		}
-		return clientes;
+		return alugueis;
 	}
 	
-	public Clientes getDados(Clientes cliente){
-		Clientes cli= null;
+	public List<?> getDadosPor(Clientes cliente) {
+		List<Alugueis> alugueis = new ArrayList<>();
+		
 		try {
-			cli  = em.createQuery("FROM Clientes c WHERE c.CPF = :cpf", Clientes.class)
-					.setParameter("cpf", cliente.getCPF()).setMaxResults(1)
-					.getSingleResult();
+			alugueis  = em.createQuery("FROM Alugueis a WHERE a.id_locacao.id_cliente = :cli ", Alugueis.class)
+					.setParameter("cli", cliente)
+					.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			if(em != null)
+				em.close();	
 		}
-		return cli;
+		return alugueis;
 	}
+	
+	
 
 }

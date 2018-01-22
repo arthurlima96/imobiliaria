@@ -5,23 +5,23 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import br.com.lab.imobiliaria.model.Clientes;
+import br.com.lab.imobiliaria.model.Locacao;
 
-public class ClientesDAO implements DAO {
+public class LocacoesDAO implements DAO{
 	
 	private EntityManager em;
 	
-	public ClientesDAO(EntityManager em) {
-	 this.em = em;
+	public LocacoesDAO(EntityManager em) {
+		this.em = em;
 	}
 	
 	@Override
 	public void Salvar(Object object) {
-		Clientes cliente = (Clientes) object;
+		Locacao locacao = (Locacao) object;
 		
 		try {
 			em.getTransaction().begin();
-			em.persist(cliente);
+			em.persist(locacao);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -34,10 +34,11 @@ public class ClientesDAO implements DAO {
 
 	@Override
 	public void Update(Object object) {
-		Clientes cliente = (Clientes) object;		
+		Locacao locacao = (Locacao) object;
+		
 		try {
 			em.getTransaction().begin();
-			em.merge(cliente);
+			em.merge(locacao);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,10 +51,11 @@ public class ClientesDAO implements DAO {
 
 	@Override
 	public void Delete(Object object) {
-		Clientes cliente = (Clientes) object;		
+		Locacao locacao = (Locacao) object;
+		
 		try {
 			em.getTransaction().begin();
-			em.remove(cliente);
+			em.remove(locacao);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,31 +67,18 @@ public class ClientesDAO implements DAO {
 	}
 
 	@Override
-	public List<Clientes> getDados() {
-		
-		List<Clientes> clientes = new ArrayList<>();
+	public List<?> getDados() {
+		List<Locacao> locacoes = new ArrayList<>();
 		
 		try {
-			clientes  = em.createQuery("FROM Clientes", Clientes.class).getResultList();
+			locacoes  = em.createQuery("FROM Locacao l GROUP BY l.id_cliente ", Locacao.class).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			if(em != null)
 				em.close();	
 		}
-		return clientes;
-	}
-	
-	public Clientes getDados(Clientes cliente){
-		Clientes cli= null;
-		try {
-			cli  = em.createQuery("FROM Clientes c WHERE c.CPF = :cpf", Clientes.class)
-					.setParameter("cpf", cliente.getCPF()).setMaxResults(1)
-					.getSingleResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return cli;
+		return locacoes;
 	}
 
 }
