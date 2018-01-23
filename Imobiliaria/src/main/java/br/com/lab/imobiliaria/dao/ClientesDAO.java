@@ -91,5 +91,17 @@ public class ClientesDAO implements DAO {
 		}
 		return cli;
 	}
+	
+	public Clientes getDados(Long id){
+		Clientes cli= null;
+		try {
+			cli  = em.createQuery("FROM Clientes c WHERE c.id = :id", Clientes.class)
+					.setParameter("cpf",id).setMaxResults(1)
+					.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cli;
+	}
 
 }

@@ -25,10 +25,6 @@ public class LocacoesDAO implements DAO{
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if (em!=null) {
-				em.close();
-			}
 		}
 	}
 
@@ -42,10 +38,6 @@ public class LocacoesDAO implements DAO{
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if (em!=null) {
-				em.close();
-			}
 		}
 	}
 
@@ -59,26 +51,31 @@ public class LocacoesDAO implements DAO{
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if (em!=null) {
-				em.close();
-			}
 		}
 	}
 
 	@Override
-	public List<?> getDados() {
+	public List<Locacao> getDados() {
 		List<Locacao> locacoes = new ArrayList<>();
 		
 		try {
 			locacoes  = em.createQuery("FROM Locacao l GROUP BY l.id_cliente ", Locacao.class).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			if(em != null)
-				em.close();	
 		}
 		return locacoes;
+	}
+	
+	public Locacao getDados(Long id) {
+		Locacao locacao = null;
+		
+		try {
+			locacao  = em.createQuery("FROM Locacao l WHERE l.id_imovel = :id ", Locacao.class)
+					.setParameter("id", id).setMaxResults(1).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return locacao;
 	}
 
 }

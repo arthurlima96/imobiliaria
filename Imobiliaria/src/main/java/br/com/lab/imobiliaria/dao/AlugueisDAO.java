@@ -68,7 +68,7 @@ public class AlugueisDAO implements DAO{
 	}
 
 	@Override
-	public List<?> getDados() {
+	public List<Alugueis> getDados() {
 		List<Alugueis> alugueis = new ArrayList<>();
 		
 		try {
